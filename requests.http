@@ -1,0 +1,108 @@
+### AUTH
+
+### Get USER JWT token
+POST http://localhost:8180/realms/lab1/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=lab1-app&client_secret={{client_secret}}&username=user&password=user123&grant_type=password&scope=openid
+
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+
+### Get ADMIN JWT token
+POST http://localhost:8180/realms/lab1/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=lab1-app&client_secret={{client_secret}}&username=admin&password=admin123&grant_type=password&scope=openid
+
+> {%
+    client.global.set("admin_access_token", response.body.access_token);
+%}
+
+
+### JWT SECURITY
+
+### API without JWT - expected 401
+GET http://localhost:8080/api/tasks
+Accept: application/json
+
+
+### API with USER JWT - expected 200
+GET http://localhost:8080/api/tasks
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+### CRUD
+
+### Create task
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "title": "Finish laboratory work",
+  "description": "Complete Spring Security laboratory work",
+  "status": "TODO",
+  "priority": "HIGH"
+}
+
+> {%
+    client.global.set("task_id", response.body.id);
+%}
+
+
+### Get created task
+GET http://localhost:8080/api/tasks/{{task_id}}
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Update created task
+PUT http://localhost:8080/api/tasks/{{task_id}}
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "title": "Finish laboratory work",
+  "description": "CRUD part completed",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH"
+}
+
+
+### Delete created task
+DELETE http://localhost:8080/api/tasks/{{task_id}}
+Authorization: Bearer {{access_token}}
+
+
+### Get deleted task - expected 404
+GET http://localhost:8080/api/tasks/{{task_id}}
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+### SECURITY FILTER CHAIN
+
+### Admin endpoint as USER - expected 403
+GET http://localhost:8080/api/admin/test
+Authorization: Bearer {{access_token}}
+
+
+### Admin endpoint as ADMIN - expected 200
+GET http://localhost:8080/api/admin/test
+Authorization: Bearer {{admin_access_token}}
+
+
+### METHOD SECURITY - @PreAuthorize
+
+### Method security as USER - expected 403
+GET http://localhost:8080/api/method-security/test
+Authorization: Bearer {{access_token}}
+
+
+### Method security as ADMIN - expected 200
+GET http://localhost:8080/api/method-security/test
+Authorization: Bearer {{admin_access_token}}

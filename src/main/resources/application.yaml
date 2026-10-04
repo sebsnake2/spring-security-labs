@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: lab1
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lab1_db
+    username: postgres
+    password: postgre123
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: lab1-app
+            client-secret: L7ehpznvDxPcXnt3SKiys9suIacK8ebNgkcORQMxDdLd73nhtg12IquextrVc4JvHobaLLYtcaxgGGSZYEs44I
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - profile
+
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/realms/lab1
+            user-name-attribute: preferred_username
+
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/lab1

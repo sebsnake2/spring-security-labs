@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+</head>
+<body>
+
+<h1>Task Manager</h1>
+
+<h2>Create task</h2>
+
+<form th:action="@{/tasks}" th:object="${task}" method="post">
+
+    <div>
+        <label>Title:</label>
+        <input type="text" th:field="*{title}">
+    </div>
+
+    <br>
+
+    <div>
+        <label>Description:</label>
+        <input type="text" th:field="*{description}">
+    </div>
+
+    <br>
+
+    <div>
+        <label>Status:</label>
+        <select th:field="*{status}">
+            <option value="TODO">TODO</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="DONE">DONE</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Priority:</label>
+        <select th:field="*{priority}">
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="HIGH">HIGH</option>
+        </select>
+    </div>
+
+    <br>
+
+    <button type="submit">Create</button>
+
+</form>
+
+<hr>
+
+<h2>Tasks</h2>
+
+<table border="1" cellpadding="8">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Created at</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.status}"></td>
+        <td th:text="${task.priority}"></td>
+        <td th:text="${task.createdAt}"></td>
+
+        <td>
+            <a th:href="@{/tasks/{id}/edit(id=${task.id})}">
+                Edit
+            </a>
+
+            <form th:action="@{/tasks/{id}/delete(id=${task.id})}"
+                  method="post"
+                  style="display:inline">
+
+                <button type="submit">Delete</button>
+
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
