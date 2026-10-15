@@ -45,28 +45,13 @@ Also demonstrated Spring AOP self-invocation behavior:
 - external call through proxy triggers the aspect
 - internal self-invocation does not trigger the aspect
 
-## Tests
-
-Lab 4 contains 5 passing tests:
+#### Lab 4 Tests
 
 - `ExecutionTimeAspectTest`
 - `InvocationCountingAspectTest`
 - `NullResultGuardAspectTest`
 
-All tests pass successfully.
-
-## Technologies
-
-- Java 21
-- Spring Boot 4
-- Spring Security
-- Spring AOP
-- Keycloak
-- PostgreSQL
-- Liquibase
-- JUnit 5
-- Mockito
-- Maven
+All 5 tests pass successfully.
 
 ### Lab 5 — Async Processing
 
@@ -81,7 +66,7 @@ Implemented asynchronous processing with a custom limited thread pool:
 - Timeout handling for long-running Future operations
 - Predictable executor overload handling with task rejection
 
-### Lab 5 Tests
+#### Lab 5 Tests
 
 `AsyncProcessingTest` covers 6 scenarios:
 
@@ -93,3 +78,17 @@ Implemented asynchronous processing with a custom limited thread pool:
 - Executor overload is handled predictably
 
 All 6 tests pass successfully.
+
+## Technologies
+
+- Java 21
+- Spring Boot 4
+- Spring Security
+- Spring AOP
+- Spring Async
+- Keycloak
+- PostgreSQL
+- Liquibase
+- JUnit 5
+- Mockito
+- Maven
