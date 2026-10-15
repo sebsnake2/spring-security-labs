@@ -67,3 +67,29 @@ All tests pass successfully.
 - JUnit 5
 - Mockito
 - Maven
+
+### Lab 5 — Async Processing
+
+Implemented asynchronous processing with a custom limited thread pool:
+
+- Fire-and-forget operation using `@Async`
+- Custom `ThreadPoolTaskExecutor` with explicit pool and queue limits
+- Parallel independent operations using `CompletableFuture`
+- Result combination using `thenCombine`
+- Exception handling with `exceptionally`
+- `AsyncUncaughtExceptionHandler` for `void @Async` methods
+- Timeout handling for long-running Future operations
+- Predictable executor overload handling with task rejection
+
+### Lab 5 Tests
+
+`AsyncProcessingTest` covers 6 scenarios:
+
+- Fire-and-forget returns before the slow operation finishes
+- Async methods use the configured executor
+- Independent async calls execute concurrently
+- Async failures are handled without crashing the caller
+- Future waiting is limited by timeout
+- Executor overload is handled predictably
+
+All 6 tests pass successfully.
