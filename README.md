@@ -79,6 +79,45 @@ Implemented asynchronous processing with a custom limited thread pool:
 
 All 6 tests pass successfully.
 
+### Lab 6 — Quartz Scheduler
+
+Implemented persistent scheduled jobs using Quartz Scheduler and PostgreSQL:
+
+- Quartz JDBC JobStore with PostgreSQL
+- Quartz `QRTZ_*` schema managed by Liquibase
+- Spring Boot schema initialization disabled with `initialize-schema: never`
+- Two lightweight Quartz jobs
+- Three triggers, including two triggers for one job
+- Explicit `JobKey`, trigger names and groups
+- `JobDataMap` defaults with trigger-level overrides
+- Explicit misfire instructions
+- Cron triggers with `Europe/Kyiv` timezone
+- `@DisallowConcurrentExecution` for non-concurrent job execution
+- Idempotent job processing using unique execution keys
+- Transaction boundaries located in Spring service methods
+- Explicit failure strategy without unlimited retries
+- Custom Spring-aware Quartz JobFactory
+
+#### Lab 6 Tests
+
+Implemented 13 tests covering:
+
+- Job and trigger identities and relationships
+- `JobDataMap` trigger override behavior
+- Explicit misfire policies
+- Cron timezone configuration
+- Lightweight Job-to-Service delegation
+- Missing JobDataMap parameter handling
+- `@DisallowConcurrentExecution`
+- Failure handling without immediate endless retry
+- Transaction boundaries on service methods
+- Idempotent report execution
+- Idempotent reminder execution
+- JDBC JobStore configuration
+- Quartz schema management through Liquibase
+
+All 13 Lab 6 tests pass successfully.
+
 ## Technologies
 
 - Java 21

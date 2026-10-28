@@ -36,3 +36,24 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8180/realms/lab1
+
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: true
+    wait-for-jobs-to-complete-on-shutdown: true
+
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: labQuartzScheduler
+            instanceId: AUTO
+
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: QRTZ_
+
+          threadPool:
+            threadCount: 4
