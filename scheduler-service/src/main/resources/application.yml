@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: scheduler-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lab1_db
+    username: postgres
+    password: ${DB_PASSWORD}
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: true
+    wait-for-jobs-to-complete-on-shutdown: true
+
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: labQuartzScheduler
+            instanceId: AUTO
+
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: QRTZ_
+
+          threadPool:
+            threadCount: 4

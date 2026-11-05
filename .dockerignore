@@ -1,0 +1,6 @@
+.idea
+.git
+target
+**/target
+*.iml
+http-client.private.env.json

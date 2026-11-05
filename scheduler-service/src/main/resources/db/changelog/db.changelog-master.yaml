@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: 006-quartz-schema.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: 007-scheduled-job-executions.sql
+      relativeToChangelogFile: true

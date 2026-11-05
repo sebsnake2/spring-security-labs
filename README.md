@@ -118,6 +118,49 @@ Implemented 13 tests covering:
 
 All 13 Lab 6 tests pass successfully.
 
+### Lab 7 — Multi-module Maven
+
+The project was converted into a Maven multi-module architecture with two independent Spring Boot services.
+
+#### Modules
+
+- `task-service` — main application with task management, security, validation, AOP and asynchronous processing
+- `scheduler-service` — independent Quartz Scheduler service
+
+#### Implemented
+
+- root Maven POM with `packaging` set to `pom`
+- `task-service` and `scheduler-service` declared in the root `<modules>` section
+- both modules inherit from the root parent POM
+- shared test dependency declared in the root POM
+- each service has its own `pom.xml`
+- each service has its own Spring Boot main class
+- independent `application.yml` configuration for each service
+- `task-service` runs on port `8080`
+- `scheduler-service` runs on port `8081`
+- Spring Boot Maven plugin configured for both modules
+- services do not have Maven dependencies on each other
+- separate Dockerfile for each service
+- Quartz logic and configuration moved into `scheduler-service`
+- root Maven reactor build successfully builds and verifies all modules
+
+#### Lab 7 Tests
+
+Implemented `MultiModuleStructureTest` with 4 tests covering:
+
+- root POM aggregation and child parent configuration
+- shared dependency configuration
+- independent service runtime configuration
+- absence of dependencies between services
+
+All Lab 7 tests pass successfully.
+
+The complete Maven reactor build also finishes with `BUILD SUCCESS` for:
+
+- `spring-security-labs`
+- `task-service`
+- `scheduler-service`
+
 ## Technologies
 
 - Java 21
