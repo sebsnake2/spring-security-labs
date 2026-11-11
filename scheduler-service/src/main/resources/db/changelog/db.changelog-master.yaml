@@ -6,3 +6,7 @@ databaseChangeLog:
   - include:
       file: 007-scheduled-job-executions.sql
       relativeToChangelogFile: true
+
+  - include:
+      file: 008-processed-task-events.sql
+      relativeToChangelogFile: true

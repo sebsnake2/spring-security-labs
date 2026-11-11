@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 import org.junit.jupiter.api.DisplayName;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.Optional;
 import java.util.List;
@@ -29,11 +30,14 @@ class TaskServiceTest {
     @Mock
     private TaskMapper taskMapper;
 
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
+
     private TaskService taskService;
 
     @BeforeEach
     void setUp() {
-        taskService = new TaskService(taskRepository, taskMapper);
+        taskService = new TaskService(taskRepository, taskMapper, eventPublisher);
     }
 
     @Test

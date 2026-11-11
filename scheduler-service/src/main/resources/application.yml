@@ -5,6 +5,12 @@ spring:
   application:
     name: scheduler-service
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:lab}
+    password: ${RABBITMQ_PASSWORD:lab123}
+
   datasource:
     url: jdbc:postgresql://localhost:5432/lab1_db
     username: postgres

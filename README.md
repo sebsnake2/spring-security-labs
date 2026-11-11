@@ -174,3 +174,46 @@ The complete Maven reactor build also finishes with `BUILD SUCCESS` for:
 - JUnit 5
 - Mockito
 - Maven
+
+### Lab 8 — Message Brokers
+
+The project was extended with asynchronous communication between `task-service` and `scheduler-service` using RabbitMQ.
+
+#### Architecture
+- `task-service` acts as the event producer
+- `scheduler-service` acts as the event consumer
+- RabbitMQ is used as the message broker
+- services do not communicate through HTTP for this process
+- services do not depend on each other's Java classes
+
+#### Implemented
+- RabbitMQ broker configured in `compose.yml`
+- durable `task.events.exchange`
+- durable `task.events.scheduler` queue
+- routing key `task.events`
+- persistent RabbitMQ messages
+- business events are published only after successful transaction commit
+- failed or rolled-back transactions do not publish events
+- `TASK_CREATED`, `TASK_COMPLETED` and `TASK_DELETED` events
+- consumer stores processed events in PostgreSQL
+- `processed_task_events` table added through Liquibase
+- duplicate events are ignored using unique `event_id` and `ON CONFLICT DO NOTHING`
+- events remain in RabbitMQ while the consumer is unavailable and are processed after it starts again
+- RabbitMQ host is configured through `RABBITMQ_HOST`
+- local IDE execution uses `localhost`
+- Docker execution uses the Compose service name `rabbitmq`
+- each service remains independently runnable
+
+#### Lab 8 Tests
+12 Lab 8 tests were added:
+
+- `TaskMessagingTest` — 4 tests
+- `RabbitMessagingConfigurationTest` — 4 tests
+- `TaskEventProcessingTest` — 4 tests
+
+The complete Maven reactor also successfully passes all previous and current tests:
+
+- `task-service` — 36 tests passed
+- `scheduler-service` — 17 tests passed
+- 53 tests passed in total
+- `mvn clean verify` — `BUILD SUCCESS`
